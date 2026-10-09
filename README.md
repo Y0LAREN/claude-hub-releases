@@ -1,10 +1,10 @@
-# Claude Hub — установщики
+# On Deck — установщики
 
-Claude Hub — настольное приложение, которое показывает все запущенные сессии Claude Code в одном окне: какая сессия
+On Deck (раньше назывался Claude Hub) — настольное приложение, которое показывает все запущенные сессии Claude Code в одном окне: какая сессия
 работает, какая ждёт ответа, сколько занято контекста, и присылает уведомления.
 
 Здесь лежат только установщики и файлы обновлений, исходного кода нет. Последняя версия — на странице
-**[Releases → Latest](https://github.com/Y0LAREN/claude-hub-releases/releases/latest)**.
+**[Releases → Latest](https://github.com/Y0LAREN/ondeck-releases/releases/latest)**.
 
 > Windows-версия в бете. Если что-то не работает — нажмите в приложении значок жука (вверху справа) и отправьте отчёт,
 > он сразу придёт разработчику.
@@ -20,50 +20,53 @@ Claude Hub — настольное приложение, которое пок�
 Откройте Claude Code в любой папке и вставьте этот промпт целиком:
 
 ````text
-Установи мне приложение Claude Hub для Windows из публичного репозитория
-https://github.com/Y0LAREN/claude-hub-releases. Действуй по шагам, используй PowerShell.
+Установи мне приложение On Deck для Windows из публичного репозитория
+https://github.com/Y0LAREN/ondeck-releases. Действуй по шагам, используй PowerShell.
 
 1. Проверь, что система — Windows 10/11 x64. Если нет — остановись и скажи мне.
 2. Получи последний релиз через API:
-   https://api.github.com/repos/Y0LAREN/claude-hub-releases/releases/latest
+   https://api.github.com/repos/Y0LAREN/ondeck-releases/releases/latest
    Возьми из assets единственный файл, оканчивающийся на ".exe" (не ".blockmap" и не ".yml").
    Скачай его в $env:TEMP через Invoke-WebRequest. Покажи мне имя файла, версию и размер.
-3. Если Claude Hub сейчас запущен (процесс "Claude Hub"), попроси меня закрыть его и подожди.
+3. Если сейчас запущен On Deck или старая версия Claude Hub (процессы "On Deck" или "Claude Hub"), попроси меня закрыть их и подожди.
 4. Запусти установщик в тихом режиме и дождись завершения:
    Start-Process -FilePath <путь к .exe> -ArgumentList '/S' -Wait
    Установка идёт в профиль пользователя, права администратора не нужны.
 5. Найди установленное приложение: обычно это
-   "$env:LOCALAPPDATA\Programs\claude-hub\Claude Hub.exe".
-   Если там нет — поищи "Claude Hub.exe" в $env:LOCALAPPDATA\Programs. Запусти его.
+   "$env:LOCALAPPDATA\Programs\on-deck\On Deck.exe".
+   Если там нет — поищи "On Deck.exe" в $env:LOCALAPPDATA\Programs. Запусти его.
 6. Удали скачанный установщик из $env:TEMP.
 7. НЕ редактируй ~/.claude/settings.json сам. Подключение к Claude Code делает само приложение,
    после того как я посмотрю, что оно изменит. Объясни мне коротко, что сделать:
-   - в окне Claude Hub нажать «Review setup», посмотреть список изменений и нажать «Install»;
+   - в окне On Deck нажать «Review setup», посмотреть список изменений и нажать «Install»;
    - перезапустить уже открытые сессии Claude Code, чтобы они начали показывать живой статус;
    - в Settings нажать «Send test notification» и, если уведомление не появилось, включить уведомления
-     для Claude Hub в Параметры Windows → Система → Уведомления.
+     для On Deck в Параметры Windows → Система → Уведомления.
 8. Когда я скажу, что нажал Install, проверь, что в %USERPROFILE%\.claude\settings.json появились хуки,
-   ссылающиеся на hook.ps1 из %APPDATA%\claude-hub, и что statusLine указывает на statusline.ps1.
+   ссылающиеся на hook.ps1 из %APPDATA%\on-deck, и что statusLine указывает на statusline.ps1.
    Ничего не меняй, только сообщи результат.
 
 Если на каком-то шаге ошибка — покажи мне текст ошибки и не пытайся обходить защиту Windows.
-В конце напомни: при проблемах в Claude Hub есть кнопка с жуком «Found a bug? Send us a report».
+В конце напомни: при проблемах в On Deck есть кнопка с жуком «Found a bug? Send us a report».
 ````
 
 ## Установка вручную
 
-1. Откройте **[последний релиз](https://github.com/Y0LAREN/claude-hub-releases/releases/latest)** и скачайте файл
-   `Claude-Hub-Setup-<версия>.exe`.
+1. Откройте **[последний релиз](https://github.com/Y0LAREN/ondeck-releases/releases/latest)** и скачайте файл
+   `On-Deck-Setup-<версия>.exe`.
 2. Запустите его. Установщик не подписан, поэтому Windows покажет «Система Windows защитила ваш компьютер» —
    нажмите **Подробнее → Выполнить в любом случае**.
-3. Пройдите установку и запустите Claude Hub.
+3. Пройдите установку и запустите On Deck.
 4. В окне приложения нажмите **Review setup**, посмотрите, что изменится в настройках Claude Code, и нажмите
    **Install**. Перед изменением приложение делает резервную копию `settings.json`.
 5. Перезапустите открытые сессии Claude Code — после этого они начнут показывать живой статус.
 6. В **Settings** нажмите **Send test notification**. Если уведомление не появилось, включите уведомления для
-   Claude Hub: Параметры Windows → Система → Уведомления.
+   On Deck: Параметры Windows → Система → Уведомления.
 
 ## Обновления
+
+Если у вас стоит Claude Hub 0.1.x, он сам предложит обновиться до On Deck: настройки перенесутся, а приложение один раз попросит обновить подключение к Claude Code (кнопка «Проверить обновление» / «Review update»).
+
 
 Приложение само проверяет новые версии (через 15 секунд после запуска и раз в 4 часа). Когда выходит обновление,
 вверху появляется кнопка **Update x.y.z**: нажмите её, затем **Restart and install**. Сессии Claude Code при этом
@@ -78,5 +81,5 @@ https://github.com/Y0LAREN/claude-hub-releases. Действуй по шагам
 
 ## Удаление
 
-Параметры Windows → Приложения → Claude Hub → Удалить. Перед этим в Settings приложения можно нажать
+Параметры Windows → Приложения → On Deck → Удалить. Перед этим в Settings приложения можно нажать
 **Uninstall** у интеграции, чтобы убрать хуки из настроек Claude Code.
