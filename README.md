@@ -6,12 +6,12 @@ On Deck (раньше назывался Claude Hub) — настольное п
 Здесь лежат только установщики и файлы обновлений, исходного кода нет. Последняя версия — на странице
 **[Releases → Latest](https://github.com/Y0LAREN/ondeck-releases/releases/latest)**.
 
-> Windows-версия в бете. Если что-то не работает — нажмите в приложении значок жука (вверху справа) и отправьте отчёт,
-> он сразу придёт разработчику.
+> Бета. Если что-то не работает, нажмите в приложении значок жука (вверху справа) и отправьте отчёт,
+> он сразу придёт разработчику. Идеи и пожелания — кнопка «Обратная связь» рядом.
 
 ## Требования
 
-- Windows 10 или 11, 64-bit
+- Windows 10 или 11, 64-bit, или macOS на Apple Silicon (M1 и новее)
 - Установленный [Claude Code](https://docs.claude.com/en/docs/claude-code/setup)
 - Права администратора не нужны, Git for Windows не обязателен
 
@@ -50,7 +50,7 @@ https://github.com/Y0LAREN/ondeck-releases. Действуй по шагам, и
 В конце напомни: при проблемах в On Deck есть кнопка с жуком «Found a bug? Send us a report».
 ````
 
-## Установка вручную
+## Установка вручную (Windows)
 
 1. Откройте **[последний релиз](https://github.com/Y0LAREN/ondeck-releases/releases/latest)** и скачайте файл
    `On-Deck-Setup-<версия>.exe`.
@@ -63,10 +63,23 @@ https://github.com/Y0LAREN/ondeck-releases. Действуй по шагам, и
 6. В **Settings** нажмите **Send test notification**. Если уведомление не появилось, включите уведомления для
    On Deck: Параметры Windows → Система → Уведомления.
 
+## Установка на Mac
+
+1. Откройте **[последний релиз](https://github.com/Y0LAREN/ondeck-releases/releases/latest)** и скачайте
+   `On-Deck-<версия>-arm64.dmg`.
+2. Откройте его и перетащите **On Deck** в «Программы». Запускайте из «Программ», не из окна образа.
+3. Сборка не заверена Apple, поэтому при первом запуске macOS может её не открыть: нажмите на On Deck в «Программах»
+   правой кнопкой → **Открыть** → **Открыть**.
+4. Дальше так же, как на Windows: **Review setup** → **Install**, перезапустить открытые сессии Claude Code и разрешить
+   уведомления (Системные настройки → Уведомления → On Deck).
+
 ## Обновления
 
 Если у вас стоит Claude Hub 0.1.x, он сам предложит обновиться до On Deck: настройки перенесутся, а приложение один раз попросит обновить подключение к Claude Code (кнопка «Проверить обновление» / «Review update»).
 
+
+Начиная с 0.3.0 обновления ставятся из приложения и на Windows, и на Mac. На Mac с версии 0.2.0 и раньше нужно один раз
+поставить 0.3.0 вручную (см. выше).
 
 Приложение само проверяет новые версии (через 15 секунд после запуска и раз в 4 часа). Когда выходит обновление,
 вверху появляется кнопка **Update x.y.z**: нажмите её, затем **Restart and install**. Сессии Claude Code при этом
@@ -75,11 +88,51 @@ https://github.com/Y0LAREN/ondeck-releases. Действуй по шагам, и
 ## Нашли ошибку?
 
 Нажмите значок жука вверху окна (или Settings → Support → **Found a bug? Send a report…**), опишите, что случилось,
-и нажмите **Send**. Вместе с описанием уйдут версии приложения и Windows, состояние подключения к Claude Code и лог
+и нажмите **Send**. Вместе с описанием уйдут версии приложения и системы, состояние подключения к Claude Code и лог
 приложения; скриншот окна — по желанию. Перед отправкой можно посмотреть весь текст. Промпты, названия сессий и пути
 к проектам в отчёт не попадают. Если отправка не удалась — **Save to file…** и пришлите файл разработчику.
 
+## Что собирает On Deck
+
+On Deck работает локально: ваши сессии, запросы и код остаются на вашем компьютере.
+
+По умолчанию приложение отправляет на сервер разработчика **анонимную статистику использования**, чтобы было видно, чем
+пользуются и что ломается. Сторонним сервисам ничего не передаётся. При первом запуске вы увидите уведомление, а
+выключить отправку можно в любой момент: Настройки → Конфиденциальность. Когда она выключена, ничего не отправляется.
+
+**Отправляется:** случайный идентификатор установки (он ни с кем не связан), версия приложения, система и её версия,
+архитектура процессора, язык интерфейса; факты установки, запуска и обновления; раз в сутки — сколько было сессий,
+максимум одновременно и количество ответов на вопросы, показанных уведомлений и открытых из On Deck терминалов;
+получилось ли подключить Claude Code (короткий код ошибки при неудаче); первые события (первая сессия, первый ответ на
+вопрос, первое открытие терминала); какие функции вы пробовали и какие настройки меняли (только включено/выключено или
+язык); технические сбои в виде коротких кодов. IP-адреса на сервере не сохраняются.
+
+**Никогда не отправляется:** запросы, названия сессий, пути проектов, имена файлов, код, названия веток, имена
+пользователей и любой введённый вами текст.
+
+Отчёты об ошибках, отзывы и необязательный опрос уходят только по вашей кнопке «Отправить», и перед отправкой видно, что
+в них входит; они работают и при выключенной статистике. Только Windows: после удаления может открыться страница с
+вопросом, почему вы ушли; она связана с вашей установкой, только если статистика была включена.
+
+<details>
+<summary>What On Deck collects (English)</summary>
+
+On Deck is local-first: your sessions, prompts and code stay on your machine. By default it sends **anonymous usage
+counts** to the developer's own server (no third parties) to see what is used and what breaks. You see a notice on
+first launch and can turn it off any time in Settings → Privacy; when off, nothing is sent.
+
+**Sent:** a random install id, app version, OS and version, CPU architecture, UI language; installed / started /
+updated; once a day, how many sessions you had, the most at once, and counts of questions answered, notifications shown
+and terminals opened; whether connecting Claude Code worked (short error code); first-time milestones; which features
+you tried and which settings you changed (on/off or language only); technical failures as short codes. IP addresses are
+not stored.
+
+**Never sent:** prompts, session names, project paths, file names, code, branch names, user names or any text you type.
+
+Bug reports, feedback and the optional survey are sent only when you click Send, and show their content first.
+</details>
+
 ## Удаление
 
-Параметры Windows → Приложения → On Deck → Удалить. Перед этим в Settings приложения можно нажать
+Windows: Параметры → Приложения → On Deck → Удалить. Mac: удалите On Deck из «Программ». Перед этим в Settings приложения можно нажать
 **Uninstall** у интеграции, чтобы убрать хуки из настроек Claude Code.
